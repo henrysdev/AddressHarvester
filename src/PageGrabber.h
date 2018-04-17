@@ -5,11 +5,14 @@
 #ifndef ENTRY_PAGEGRABBER_H
 #define ENTRY_PAGEGRABBER_H
 
+#include "Parser.h"
 #include <string>
 
 using namespace std;
 
 class PageGrabber {
+private:
+    Parser parser;
 public:
     PageGrabber();
     void fetch_page(string);

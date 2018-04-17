@@ -18,18 +18,22 @@ int main (int argc, char**argv) {
     switch(argc) {
         case 1:
             run(DEFAULT_SEED_URL);
+            break;
         case 2:
             run(argv[1]);
+            break;
+        default:
+            return 1;
     }
     return 0;
 }
 
 void run(string seedurl) {
     UrlFrontier urlfront = UrlFrontier();
+    urlfront.add_url(seedurl);
     PageGrabber pgrabber = PageGrabber();
-    Parser parser = Parser();
 
     while (!urlfront.is_empty()) {
-        pgrabber.
+        pgrabber.fetch_page(urlfront.next_url());
     }
 }
