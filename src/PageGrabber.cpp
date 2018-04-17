@@ -8,12 +8,12 @@
 
 using namespace std;
 
-PageGrabber::PageGrabber() {
-    parser = Parser();
+PageGrabber::PageGrabber(Parser& p) {
+    parser = &p;
 }
 
-void PageGrabber::fetch_page(string) {
+void PageGrabber::fetch_page(string url) {
     HTTPDownloader downloader;
-    string content = downloader.download("https://stackoverflow.com");
-    parser.parse_html(content);
+    string content = downloader.download(url);
+    parser->parse_html(content, url);
 }

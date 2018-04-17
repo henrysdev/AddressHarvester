@@ -6,13 +6,22 @@
 #define ENTRY_PARSER_H
 
 #include <string>
+#include <vector>
 
-using namespace std;
+#include "UrlFrontier.h"
+#include "UrlFilter.h"
+#include "libs/gumbo-parser/src/gumbo.h"
 
 class Parser {
+private:
+    UrlFrontier * urlfrontier = NULL;
+    UrlFilter * urlfilter = NULL;
+    std::vector<std::string> foundlinks;
+    void search_for_links(GumboNode*);
+    std::string cleantext(GumboNode*);
 public:
-    Parser();
-    void parse_html(string);
+    Parser(UrlFrontier&, UrlFilter&);
+    void parse_html(std::string, std::string);
 };
 
 

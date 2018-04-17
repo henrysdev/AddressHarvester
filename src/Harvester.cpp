@@ -2,13 +2,17 @@
 // Created by Henry Warren on 4/16/18.
 //
 #include <iostream>
+#include <chrono>
+#include <thread>
 #include <string>
 
 #include "UrlFrontier.h"
 #include "PageGrabber.h"
+#include "UrlFilter.h"
 #include "Parser.h"
 
 #define DEFAULT_SEED_URL "https://university.graduateshotline.com/ubystate.html"
+#define CRAWL_DELAY_MS 1000
 
 using namespace std;
 
@@ -28,12 +32,18 @@ int main (int argc, char**argv) {
     return 0;
 }
 
+
 void run(string seedurl) {
     UrlFrontier urlfront = UrlFrontier();
     urlfront.add_url(seedurl);
-    PageGrabber pgrabber = PageGrabber();
+    UrlFilter urlfilter = UrlFilter();
+    Parser parser = Parser(urlfront, urlfilter);
+    PageGrabber pgrabber = PageGrabber(parser);
 
     while (!urlfront.is_empty()) {
-        pgrabber.fetch_page(urlfront.next_url());
+        std::string next = urlfront.next_url();
+        std::cout << next << std::endl;
+        pgrabber.fetch_page(next);
+        std::this_thread::sleep_for(std::chrono::milliseconds(CRAWL_DELAY_MS));
     }
 }

@@ -7,10 +7,11 @@
  * Published under CC0 1.0 Universal (public domain)
  */
 #include "HTTPDownloader.h"
-#include <curl/curl.h>
-#include <curl/easy.h>
+#include "../libs/curl-lib/include/curl/curl.h"
+#include "../libs/curl-lib/include/curl/easy.h"
 #include <sstream>
 #include <iostream>
+
 using namespace std;
 size_t write_data(void *ptr, size_t size, size_t nmemb, void *stream) {
     string data((const char*) ptr, (size_t) size * nmemb);

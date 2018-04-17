@@ -12,9 +12,9 @@ using namespace std;
 
 class PageGrabber {
 private:
-    Parser parser;
+    Parser * parser = NULL;
 public:
-    PageGrabber();
+    PageGrabber(Parser&);
     void fetch_page(string);
 };
 
