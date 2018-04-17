@@ -14,6 +14,8 @@ add_executable(entry src/Harvester.cpp
                 src/UrlFilter.cpp
                 src/TextSearch.h
                 src/TextSearch.cpp
+                src/UrlGuesser.cpp
+                src/UrlGuesser.h
                 src/utils/HTTPDownloader.h
                 src/utils/HTTPDownloader.cpp
                 src/libs/gumbo-parser/src/attribute.c

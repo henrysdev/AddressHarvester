@@ -10,6 +10,7 @@
 #include "PageGrabber.h"
 #include "UrlFilter.h"
 #include "Parser.h"
+#include "UrlGuesser.h"
 
 #define DEFAULT_SEED_URL "https://github.com/henrysdev" //"https://s2.smu.edu/~fmoore/"
 #define CRAWL_DELAY_MS 1000
@@ -34,6 +35,9 @@ int main (int argc, char**argv) {
 
 
 void run(string seedurl) {
+    UrlGuesser guesser = UrlGuesser();
+    guesser.gen_next();
+    /*
     UrlFrontier urlfront = UrlFrontier();
     urlfront.add_url(seedurl);
     UrlFilter urlfilter = UrlFilter();
@@ -46,4 +50,5 @@ void run(string seedurl) {
         pgrabber.fetch_page(next);
         std::this_thread::sleep_for(std::chrono::milliseconds(CRAWL_DELAY_MS));
     }
+     */
 }

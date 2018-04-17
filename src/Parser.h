@@ -19,7 +19,7 @@ private:
     UrlFilter * urlfilter = NULL;
     TextSearch textsearch;
     std::vector<std::string> foundlinks;
-    void search_for_links(GumboNode*);
+    void search_for_links(GumboNode*, std::string);
     std::string cleantext(GumboNode*);
 public:
     Parser(UrlFrontier&, UrlFilter&);

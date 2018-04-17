@@ -38,7 +38,7 @@ std::string Parser::cleantext(GumboNode* node) {
 
 
 // https://github.com/google/gumbo-parser
-void Parser::search_for_links(GumboNode* node) {
+void Parser::search_for_links(GumboNode* node, std::string baseurl) {
     if (node->type != GUMBO_NODE_ELEMENT) {
         return;
     }
@@ -50,12 +50,16 @@ void Parser::search_for_links(GumboNode* node) {
         std::string sub = "http";
         // TODO allow relative path hrefs (must convert them to absolute links)
         if (!foundurl.compare(0,sub.length(),sub))
-            foundlinks.push_back(href->value);
+            foundlinks.push_back(foundurl);
+        else {
+            foundurl = baseurl + href->value;
+            foundlinks.push_back(foundurl);
+        }
     }
 
     GumboVector* children = &node->v.element.children;
     for (unsigned int i = 0; i < children->length; ++i) {
-        search_for_links(static_cast<GumboNode*>(children->data[i]));
+        search_for_links(static_cast<GumboNode*>(children->data[i]), baseurl);
     }
 }
 
@@ -69,7 +73,7 @@ void Parser::parse_html(std::string contents, std::string baseurl) {
     std::vector<std::string> found_emails = textsearch.find_emails(plaintext);
 
     // search html document tree for href links then destroy document tree
-    search_for_links(output->root);
+    search_for_links(output->root, baseurl);
     gumbo_destroy_output(&kGumboDefaultOptions, output);
 
     // filter found href links

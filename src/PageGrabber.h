@@ -8,14 +8,13 @@
 #include "Parser.h"
 #include <string>
 
-using namespace std;
-
 class PageGrabber {
 private:
     Parser * parser = NULL;
 public:
     PageGrabber(Parser&);
-    void fetch_page(string);
+    void fetch_page(std::string);
+    std::string base_url(std::string);
 };
 
 
