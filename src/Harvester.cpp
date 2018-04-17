@@ -11,7 +11,7 @@
 #include "UrlFilter.h"
 #include "Parser.h"
 
-#define DEFAULT_SEED_URL "https://university.graduateshotline.com/ubystate.html"
+#define DEFAULT_SEED_URL "https://github.com/henrysdev" //"https://s2.smu.edu/~fmoore/"
 #define CRAWL_DELAY_MS 1000
 
 using namespace std;

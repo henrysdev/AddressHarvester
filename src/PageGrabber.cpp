@@ -6,14 +6,13 @@
 #include "utils/HTTPDownloader.h"
 #include <iostream>
 
-using namespace std;
 
 PageGrabber::PageGrabber(Parser& p) {
     parser = &p;
 }
 
-void PageGrabber::fetch_page(string url) {
+void PageGrabber::fetch_page(std::string url) {
     HTTPDownloader downloader;
-    string content = downloader.download(url);
+    std::string content = downloader.download(url);
     parser->parse_html(content, url);
 }

@@ -7,11 +7,10 @@
 #include "Parser.h"
 #include "libs/gumbo-parser/src/gumbo.h"
 
-using namespace std;
-
 Parser::Parser(UrlFrontier& ufront, UrlFilter& ufilt) {
     urlfrontier = &ufront;
     urlfilter = &ufilt;
+    textsearch = TextSearch();
 }
 
 
@@ -61,13 +60,19 @@ void Parser::search_for_links(GumboNode* node) {
 }
 
 
-void Parser::parse_html(string contents, string baseurl) {
+void Parser::parse_html(std::string contents, std::string baseurl) {
     GumboOutput* output = gumbo_parse(contents.c_str());
-    // do stuff with output->root
+    // get all text on html page
     std::string plaintext = cleantext(output->root);
-    search_for_links(output->root);
 
+    // search html text for email addresses
+    std::vector<std::string> found_emails = textsearch.find_emails(plaintext);
+
+    // search html document tree for href links then destroy document tree
+    search_for_links(output->root);
     gumbo_destroy_output(&kGumboDefaultOptions, output);
+
+    // filter found href links
     for (auto url : foundlinks) {
         if (urlfilter->is_valid(url)) {
             urlfrontier->add_url(url);
